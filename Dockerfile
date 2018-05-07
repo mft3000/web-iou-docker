@@ -5,7 +5,7 @@ WORKDIR /
 RUN apt-get update -y && \
 	apt-get dist-upgrade -y && \
 	apt-get dist-upgrade -y && \
-	apt-get install git
+	apt-get install -y git
 
 RUN git clone https://github.com/dainok/iou-web && \
 	cd iou-web && \
