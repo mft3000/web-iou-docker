@@ -16,7 +16,7 @@ RUN apt-get install -y apache2 wget vim && \
 	xdotool \
 	php-pear \
 	php5-gd \
-	php5-cgi 
+	php5-cgi \
 	libpcap0.8 \
 	dos2unix \
     lib32z1 \
