@@ -33,7 +33,7 @@ COPY iou.conf /etc/apache2/sites-available/iou.conf
 	
 RUN apt-get install -y \
 	libpcap0.8 \
-	dos2unix
+	dos2unix \
     lib32z1 \
     lib32ncurses5 \
     lib32bz2-1.0 \
