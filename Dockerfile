@@ -17,6 +17,14 @@ RUN apt-get install -y apache2 wget vim && \
 	php-pear \
 	php5-gd \
 	php5-cgi 
+	libpcap0.8 \
+	dos2unix \
+    lib32z1 \
+    lib32ncurses5 \
+    lib32bz2-1.0 \
+    ibssl1.0.0 \
+    libtinfo5 && \
+    ln -s /lib/i386-linux-gnu/libcrypto.so.1.0.0 /usr/lib/libcrypto.so.4
 	
 RUN git clone https://github.com/dainok/iou-web && \
 	cd iou-web && \
@@ -30,16 +38,7 @@ COPY iou.conf /etc/apache2/sites-available/iou.conf
 
 # COPY iourc /opt/iou/bin
 # COPY images/* /opt/iou/bin
-	
-RUN apt-get install -y \
-	libpcap0.8 \
-	dos2unix \
-    lib32z1 \
-    lib32ncurses5 \
-    lib32bz2-1.0 \
-    ibssl1.0.0 \
-    libtinfo5 && \
-    ln -s /lib/i386-linux-gnu/libcrypto.so.1.0.0 /usr/lib/libcrypto.so.4
+COPY iou-web-export-20180507140350.gz /opt/iou/
 
 EXPOSE 80 
 
