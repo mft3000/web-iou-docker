@@ -3,7 +3,7 @@
 This repository will contains the data for build and run a docker container with iou-web in order to run cisco IOU simulations ( based on Andrea Dainese iou-web repository https://github.com/dainok/iou-web)
 
 ```
-docker container run -it -d --name iou-web -p 80:80 -p 2001-2019:2001-2019 debian:8
+docker container run -it -d --name iou-web --hostaname iou -p 80:80 -p 2001-2019:2001-2019 debian:8
 docker container exec -it iou-web bash
 ```
 
