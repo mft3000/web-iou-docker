@@ -1,4 +1,4 @@
-FROM debian:8
+FROM i386/debian:8
 
 WORKDIR /
 
@@ -19,20 +19,23 @@ RUN apt-get install -y apache2 wget vim && \
 	php5-cgi \
 	libpcap0.8 \
 	dos2unix \
-    lib32z1 \
-    lib32ncurses5 \
-    lib32bz2-1.0 \
     ibssl1.0.0 \
-    libtinfo5 && \
-    ln -s /lib/i386-linux-gnu/libcrypto.so.1.0.0 /usr/lib/libcrypto.so.4
-	
+    libtinfo5 
+
+# RUN apt-get install -y php5 \
+    # lib32z1 \
+    # lib32ncurses5 \
+    # ln -s /lib/i386-linux-gnu/libcrypto.so.1.0.0 /usr/lib/libcrypto.so.4
+
 RUN git clone https://github.com/dainok/iou-web && \
 	cd iou-web && \
 	dpkg -i iou-web_1.2.2-23_all.deb &&  \
 	echo 'ServerName myserver.mydomain.com' >> /etc/apache2/apache2.conf
-	
-RUN a2dissite 000-default && \
-	rm /etc/apache2/sites-available/iou
+
+RUN a2dissite 000-default 
+
+RUN	rm /etc/apache2/sites-available/iou && \
+	rm /etc/apache2/sites-enabled/001-iou
 	
 COPY iou.conf /etc/apache2/sites-available/iou.conf
 
@@ -40,10 +43,10 @@ COPY iou.conf /etc/apache2/sites-available/iou.conf
 # COPY images/* /opt/iou/bin
 COPY iou-web-export-20180507140350.gz /opt/iou/
 
-EXPOSE 80 
-
 RUN a2enmod cgi && \
 	a2ensite iou && \
 	service apache2 restart
+	
+EXPOSE 80 
 
 ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
