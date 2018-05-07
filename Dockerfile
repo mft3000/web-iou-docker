@@ -13,10 +13,23 @@ RUN git clone https://github.com/dainok/iou-web && \
 	echo 'ServerName myserver.mydomain.com' >> /etc/apache2/apache2.conf
 	
 RUN apt-get install -y apache2 wget vim && \
-	apt-get install php5 php5-pspell libgv-php5 sqlite3 php5-sqlite xdotool php-pear php5-gd
+	apt-get install php5 \
+	php5-pspell \
+	libgv-php5 \
+	sqlite3 \
+	php5-sqlite \
+	xdotool \
+	php-pear \
+	php5-gd \
+	php5-cgi 
 	
 RUN a2dissite 000-default && \
 	rm /etc/apache2/sites-available/iou
+	
+COPY iou.conf /etc/apache2/sites-available/iou.conf
+
+# COPY iourc /opt/iou/bin
+# COPY images/* /opt/iou/bin
 	
 RUN apt-get install -y \
 	libpcap0.8 \
@@ -29,5 +42,9 @@ RUN apt-get install -y \
     ln -s /lib/i386-linux-gnu/libcrypto.so.1.0.0 /usr/lib/libcrypto.so.4
 
 EXPOSE 80 
+
+RUN a2enmod cgi && \
+	a2ensite iou && \
+	service apache2 restart
 
 ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
