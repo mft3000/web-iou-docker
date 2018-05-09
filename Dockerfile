@@ -9,6 +9,7 @@ RUN apt-get update -y && \
 
 RUN apt-get install -y apache2 wget vim && \
 	apt-get install -y php5 \
+	libapache2-mod-php5 \
 	php5-pspell \
 	libgv-php5 \
 	sqlite3 \
@@ -49,4 +50,4 @@ RUN a2enmod cgi && \
 	
 EXPOSE 80 
 
-ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
